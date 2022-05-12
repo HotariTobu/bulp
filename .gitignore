@@ -1,0 +1,7 @@
+ignore_*
+
+node_modules/
+rec/
+
+*.js
+*.js.map
