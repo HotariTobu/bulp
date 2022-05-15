@@ -1,15 +1,9 @@
 <?php
 
-session_start();
+require_once __DIR__ . '/../php/modules/initialize.php';
 
-require 'mail_validation_function.php';
 
-$mail_result = send_validation_mail();
-if ($mail_result === true) {
-    header("Location:{$_SERVER['HTTP_REFERER']}");
-    exit;
-}
-else {
-    echo 'メールアドレス検証のためのメールの送信に失敗しました。' . $mail_result . '<br>';
-    echo "<a href=\"{$_SERVER['HTTP_REFERER']}\">前に戻る</a>";
-}
+$mail_title = MAIL_TITLE_VALIDATION;
+$mail_lines = MAIL_CONTENT_VALIDATION;
+
+require_once __DIR__ . '/send.php';

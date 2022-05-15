@@ -2,7 +2,7 @@
 
 # Connect database
 
-$database_info_lines = file(__DIR__ . '../../ignore_database_info', FILE_IGNORE_NEW_LINES);
+$database_info_lines = file(PATH_DATABASE_INFO, FILE_IGNORE_NEW_LINES);
 
 try {
     $pdo = new PDO($database_info_lines[0], $database_info_lines[1], $database_info_lines[2], array(PDO::ATTR_ERRMODE => PDO::ERRMODE_WARNING));
@@ -13,6 +13,6 @@ try {
 
 # List table name
 
-define('TABLE_NAME_POSTS', 'bulp_posts');
-define('TABLE_NAME_USERS', 'bulp_users');
-define('TABLE_NAME_VALIDATION_MAIL', 'bulp_validation_mail');
+const TABLE_NAME_POSTS = 'bulp_posts';
+const TABLE_NAME_USERS = 'bulp_users';
+const TABLE_NAME_VALIDATION_MAIL = 'bulp_validation_mails';

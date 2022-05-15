@@ -5,3 +5,5 @@ rec/
 
 *.js
 *.js.map
+
+package-lock.json

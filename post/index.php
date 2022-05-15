@@ -1,5 +1,8 @@
 <?php
 
+require_once __DIR__ . '/../php/modules/initialize.php';
+
+
 $has_action_bar = true;
 
 if (empty($post)) {
@@ -11,20 +14,27 @@ if (empty($post)) {
         }
     }
 
-    if (isset($id)) {
-        $query = 'SELECT * FROM `:table_name` WHERE id=:id';
-        $statement = $pdo->prepare($query);
-        $statement->bindValue(':table_name', TABLE_NAME_POSTS, PDO::PARAM_STR);
-        $statement->bindParam(':id', $id, PDO::PARAM_INT);
-        
-        $statement->execute();
-        $post = $statement->fetch();
-        if ($post === false) {
-            exit(ERROR_MESSAGE_GET_POSTS);
-        }
+    if (empty($id)) {
+        exit(ERROR_MESSAGE_GET_ID);
+    }
+    else if ($id < 0) {
+        exit;
     }
     else {
-        exit(ERROR_MESSAGE_GET_ID);
+        $table_name = TABLE_NAME_POSTS;
+        $query = "SELECT * FROM `{$table_name}` WHERE id=:id";
+        $statement = $pdo->prepare($query);
+        $statement->bindParam(':id', $id, PDO::PARAM_INT);
+        
+        if (!$statement->execute()) {
+            exit(ERROR_MESSAGE_GET_POSTS);
+        }
+        else {
+            $post = $statement->fetch();
+            if (!$post) {
+                exit(ERROR_MESSAGE_NO_POSTS);
+            }
+        }
     }
 
     $has_action_bar = false;
@@ -33,16 +43,17 @@ if (empty($post)) {
 if (isset($post)) {
     # Get user info
         
-    $query = 'SELECT * FROM `:table_name` WHERE id=:id';
+    $table_name = TABLE_NAME_USERS;
+    $query = "SELECT * FROM `{$table_name}` WHERE id=:id";
     $statement = $pdo->prepare($query);
-    $statement->bindValue(':table_name', TABLE_NAME_USERS, PDO::PARAM_STR);
     $statement->bindParam(':id', $post['user_id'], PDO::PARAM_INT);
     
-    $statement->execute();
-    $user = $statement->fetch();
-    if ($user === false) {
+    if (!$statement->execute()) {
         exit(ERROR_MESSAGE_GET_USER_INFO);
+    }
+    else {
+        $user = $statement->fetch();
     }
 }
 
-require __DIR__ . 'layout.php';
+require __DIR__ . '/layout.php';

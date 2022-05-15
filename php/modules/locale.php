@@ -1,9 +1,7 @@
 <?php
 
-define('LANGUAGES_DIRECTORY_PATH', '../languages/');
-
 $language_filenames = [];
-$directory_handle = opendir(LANGUAGES_DIRECTORY_PATH);
+$directory_handle = opendir(PATH_LANGUAGES);
 while (($filename = readdir($directory_handle)) !== false) {
     $language_filenames[] = $filename;
 }
@@ -15,14 +13,14 @@ foreach ($raw_languages as $raw_language) {
 
   foreach ($language_filenames as $filename) {
       if (str_starts_with($filename, $language)) {
-          $language_filename = LANGUAGES_DIRECTORY_PATH . $filename;
+          $language_filename = PATH_LANGUAGES . $filename;
           break 2;
       }
   }
 }
 
 if (empty($language_filename)) {
-    $language_filename = LANGUAGES_DIRECTORY_PATH . 'ja-JP.php';
+    $language_filename = PATH_LANGUAGES . 'ja-JP.php';
 }
 
-require $language_filename;
+require_once $language_filename;

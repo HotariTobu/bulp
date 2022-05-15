@@ -1,5 +1,6 @@
 <?php
 
-require __DIR__ . 'locale.php';
-require __DIR__ . 'database.php';
-require __DIR__ . 'session.php';
+require_once __DIR__ . '/paths.php';
+require_once __DIR__ . '/locale.php';
+require_once __DIR__ . '/database.php';
+require_once __DIR__ . '/session.php';

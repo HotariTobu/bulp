@@ -14,21 +14,21 @@
     <div class="main">
         <div class="icon">
             <?php if (empty($user)): ?>
-                <?php require __DIR__ . 'icon.php' ?>
+                <?php require PATH_ROOT . 'php/parts/icon.php' ?>
             <?php else: ?>
-                <a href="user.php?id=<?= $user['id'] ?>" class="non-text">
-                    <?php require __DIR__ . 'icon.php' ?>
+                <a href="<?= PATH_HTTP_ROOT . "user?id={$user['id']}" ?>" class="non-text">
+                    <?php require PATH_ROOT . 'php/parts/icon.php' ?>
                 </a>
             <?php endif ?>
         </div>
-        <a href="post_detail.php?post_id=<?= $post['id'] ?>" class="content">
+        <a href="<?= PATH_HTTP_ROOT . "post/detail?post_id={$post['id']}" ?>" class="content">
             <?= $post['content'] ?>
         </a>
     </div>
     <?php if ($has_action_bar): ?>
         <div>
             <button><?= ACTION_POWER_WORD ?></button>
-            <a class="a_post popup" href="#div-popup-post" id="<?= $post['id'] ?>"><?= ACTION_REPLY ?></a>
+            <a class="a_post" href="#div-popup-post" id="<?= $post['id'] ?>"><?= ACTION_REPLY ?></a>
         </div>
     <?php endif ?>
 </div>

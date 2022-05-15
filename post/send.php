@@ -1,6 +1,6 @@
 <?php
 
-require __DIR__ . '../php/modules/initialize.php';
+require_once __DIR__ . '/../php/modules/initialize.php';
 
 
 # Get POST values
@@ -16,27 +16,28 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 }
 
 
-# Insert post
-
 if (empty($content)) {
     exit(ERROR_MESSAGE_EMPTY_POST_CONTENT);
 }
-
-if (!isset($id)) {
-    $id = -1;
-}
-
-if (!isset($post_id)) {
-    $post_id = -1;
-}
-
-$query = 'INSERT INTO `:table_name` (user_id, reply_id, content) VALUES (:user_id, :reply_id, :content)';
-$statement = $pdo->prepare($query);
-$statement->bindValue(':table_name', TABLE_NAME_POSTS, PDO::PARAM_STR);
-$statement->bindParam(':user_id', $id, PDO::PARAM_INT);
-$statement->bindParam(':reply_id', $post_id, PDO::PARAM_INT);
-$statement->bindParam(':content', $content, PDO::PARAM_STR);
-
-if (!$statement->execute()) {
-    exit(ERROR_MESSAGE_POST);
+else {
+    # Insert post
+    
+    if (empty($id)) {
+        $id = -1;
+    }
+    
+    if (empty($post_id)) {
+        $post_id = -1;
+    }
+    
+    $table_name = TABLE_NAME_POSTS;
+    $query = "INSERT INTO `{$table_name}` (user_id, reply_id, content) VALUES (:user_id, :reply_id, :content)";
+    $statement = $pdo->prepare($query);
+    $statement->bindParam(':user_id', $id, PDO::PARAM_INT);
+    $statement->bindParam(':reply_id', $post_id, PDO::PARAM_INT);
+    $statement->bindParam(':content', $content, PDO::PARAM_STR);
+    
+    if (!$statement->execute()) {
+        exit(ERROR_MESSAGE_POST);
+    }
 }

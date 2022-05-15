@@ -1,11 +1,9 @@
 <!--
-    $record_message:    string
+    $error_message:    string
 -->
 
-<?php if (isset($record_message)): ?>
-    <?= $record_message ?>
-<?php else: ?>
+<a href="../"><?= LINK_TOP ?></a>
+<br>
+<?php if (empty($error_message)): ?>
     <?= MESSAGE_SUCCEED_IN_VALIDATING_MAIL ?>
 <?php endif; ?>
-<br>
-<a href="<?= __DIR__ . '../' ?>"><?= LINK_TOP ?></a>

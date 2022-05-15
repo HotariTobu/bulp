@@ -1,8 +1,6 @@
 <?php
 
-$title = TITLE_USER;
-$description = '';
-$layout_path = __DIR__ . 'layout.php';
+require_once __DIR__ . '/../php/modules/initialize.php';
 
 
 # Get GET values
@@ -16,36 +14,46 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 }
 
 
-# Get user info
-
-if (isset($id)) {
-    $query = 'SELECT * FROM `:table_name` WHERE id=:id';
-    $statement = $pdo->prepare($query);
-    $statement->bindValue(':table_name', TABLE_NAME_USERS, PDO::PARAM_STR);
-    $statement->bindParam(':id', $id, PDO::PARAM_INT);
-    
-    $statement->execute();
-    $user = $statement->fetch(); 
-    if ($user === false) {
-        exit(ERROR_MESSAGE_GET_USER_INFO);
-    }
+if (empty($id)) {
+    $error_message = ERROR_MESSAGE_GET_ID;
 }
 else {
-    exit(ERROR_MESSAGE_GET_ID);
+    # Get user info
+
+    $table_name = TABLE_NAME_USERS;
+    $query = "SELECT * FROM `{$table_name}` WHERE id=:id";
+    $statement = $pdo->prepare($query);
+    $statement->bindParam(':id', $id, PDO::PARAM_INT);
+    
+    if (!$statement->execute()) {
+        $error_message = ERROR_MESSAGE_GET_USER_INFO;
+    }
+    else {
+        $user = $statement->fetch();
+        if (!$user) {
+            $error_message = ERROR_MESSAGE_NO_USER_INFO;
+        }
+        else {
+            # Get posts
+            
+            $table_name = TABLE_NAME_POSTS;
+            $query = "SELECT * FROM `{$table_name}` WHERE user_id=:user_id";
+            $statement = $pdo->prepare($query);
+            $statement->bindParam(':user_id', $user['id'], PDO::PARAM_INT);
+            
+            if (!$statement->execute()) {
+                $error_message = ERROR_MESSAGE_GET_POSTS;
+            }
+            else {
+                $posts = $statement->fetchAll();
+            }            
+        }
+    }
 }
 
 
-# Get posts
+$title = empty($user['nickname']) ? TITLE_USER : $user['nickname'];
+$description = '';
+$layout_path = __DIR__ . '/layout.php';
 
-$query = 'SELECT * FROM `:table_name` WHERE user_id=:user_id';
-$statement = $pdo->prepare($query);
-$statement->bindValue(':table_name', TABLE_NAME_POSTS, PDO::PARAM_STR);
-$statement->bindParam(':user_id', $user['id'], PDO::PARAM_INT);
-$statement->execute();
-$posts = $statement->fetchAll();
-if ($posts === false) {
-    $record_message = ERROR_MESSAGE_GET_POSTS;
-}
-
-
-require __DIR__ . '../php/parts/template/standard/index.php';
+require_once PATH_ROOT . 'php/parts/template/standard/index.php';

@@ -6,32 +6,36 @@
 -->
 
 <?php
+    require_once PATH_ROOT . 'php/modules/paths.php';
 
-if (empty($user)) {
-    $user['image'] = null;
-    $user['image_number'] = -1;
-}
 
-if ($user['image'] == null) {
-    if ($user['image_number'] < 0) {
-        $user['image_number'] = rand();
+    if (empty($user)) {
+        $user['image'] = null;
+        $user['image_number'] = -1;
     }
 
-    $fi = new FilesystemIterator('ignore_icons', FilesystemIterator::SKIP_DOTS);
-    $icon_count = iterator_count($fi);
-    $icon_number = sprintf('%04d', $user['image_number'] % $icon_count);
+    if ($user['image'] === null) {
+        if ($user['image_number'] < 0) {
+            $user['image_number'] = rand();
+        }
 
-    $icon_filename = "ignore_icons/{$icon_number}.png";
+        $fi = new FilesystemIterator(PATH_ICONS, FilesystemIterator::SKIP_DOTS);
+        $icon_count = iterator_count($fi);
+        $icon_number = sprintf('%04d', $user['image_number'] % $icon_count);
 
-    $fp = fopen($icon_filename, "rb");
-    $user['image'] = fread($fp, filesize($icon_filename));
-    fclose($fp);
-}
+        $icon_filename = PATH_ICONS . "{$icon_number}.png";
 
-if (empty($icon_size)) {
-    $icon_size = 60;
-}
+        $fp = fopen($icon_filename, "rb");
+        $user['image'] = fread($fp, filesize($icon_filename));
+        fclose($fp);
+    }
 
-$image_info = getimagesizefromstring($user['image']);
-$encoded_image = base64_encode($user['image']);
-echo "<img src=\"data:{$image_info['mime']};base64,{$encoded_image}\" class=\"icon\">";
+    if (empty($icon_size)) {
+        $icon_size = 60;
+    }
+
+    $image_info = getimagesizefromstring($user['image']);
+    $encoded_image = base64_encode($user['image']);
+?>
+
+<img src="<?= "data:{$image_info['mime']};base64,{$encoded_image}" ?>" class="icon">
