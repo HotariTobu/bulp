@@ -1,13 +1,20 @@
 <?php
 
+/*
+    $_GET {
+        'id'
+    }
+*/
+
+
 require_once __DIR__ . '/../../php/modules/initialize.php';
 
 
-# Get get values
+# Get GET values
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-    if (!empty($_GET['post_id'])) {
-        $post_id = $_GET['post_id'];
+    if (!empty($_GET['id'])) {
+        $post_id = $_GET['id'];
     }
 }
 

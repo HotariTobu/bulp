@@ -1,14 +1,18 @@
-<!--
-    $user:  {
-        'nickname'
-        'note'
-    }
-    $is_same:   boolean
-    $posts: array of post
-    $error_message:    string
--->
+<?php
 
-<?php require PATH_ROOT . 'php/parts/icon.php' ?>
+    /*
+        $user:  {
+            'nickname'
+            'note'
+        }
+        $is_same:   boolean
+        $posts: array of post
+        $error_message:    string
+    */
+
+
+    require PATH_ROOT . 'php/parts/icon.php';
+?>
 <br>
 <span><?= $user['nickname'] ?></span>
 <br>

@@ -1,6 +1,6 @@
-<!--
+<?php /*
     $error_message:    string
--->
+*/ ?>
 
 <a href="../"><?= LINK_TOP ?></a>
 <br>

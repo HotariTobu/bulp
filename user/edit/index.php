@@ -1,5 +1,17 @@
 <?php
 
+/*
+    $_POST {
+        'submit'
+        'nickname'
+        'note'
+    }
+*/
+
+
+require_once __DIR__ . '/../../php/modules/initialize.php';
+
+
 # Get POST values
 
 $submit = '';
@@ -84,7 +96,7 @@ if ($submit === SUBMIT_VALUE_EDIT) {
             $_SESSION['nickname'] = $nickname;
             $_SESSION['note'] = $note;
 
-            header("Location:{$_SERVER['HTTP_REFERER']}");
+            header('Location:' . PATH_HTTP_ROOT . "user?id={$id}");
             exit;
         }
     }

@@ -37,6 +37,7 @@ const LABEL_EMAIL = 'e-mail';
 const LABEL_PASSWORD = 'パスワード';
 
 const MESSAGE_WHEN_NOT_HAVE_VALIDATION_MAIL = 'メールアドレスの検証メールが届いていない場合は';
+const MESSAGE_SENT_VALIDATION_MAIL = 'メールアドレスの検証メールを送信しました。';
 const MESSAGE_SUCCEED_IN_VALIDATING_MAIL = 'メールアドレスの検証に成功しました。';
 
 const LINK_TOP = 'トップへ';
@@ -78,6 +79,7 @@ const ERROR_MESSAGE_GET_VALIDATION_MAIL_DATA = '登録されたメールアド�
 const ERROR_MESSAGE_GET_VALIDATION_MAIL_DATA_ID = 'メールアドレスの検証のためのデータIDを取得できませんでした。';
 const ERROR_MESSAGE_GET_POST_ID = '投稿IDを取得できませんでした。';
 const ERROR_MESSAGE_GET_MAIL = 'メールアドレスを取得できませんでした。';
+const ERROR_MESSAGE_SEND_VALIDATION_MAIL = 'メールアドレスの検証メールを送信できませんでした。';
 
 const MAIL_TITLE_SIGNUP_AND_VALIDATION = 'サインアップ完了とメール検証について';
 const MAIL_TITLE_VALIDATION = 'メール検証について';
@@ -87,6 +89,6 @@ const MAIL_CONTENT_SIGNUP_AND_VALIDATION = [
     '送信していただいたメールアドレスを検証するために下のリンク先にアクセスしていただくようお願いいたします。',
 ];
 const MAIL_CONTENT_VALIDATION = [
-    '掲示板『パワー』をご利用ありがとうございます。',
+    '掲示板『パワー』をご使用ありがとうございます。',
     '登録されているメールアドレスを検証するために下のリンク先にアクセスしていただくようお願いいたします。',
 ];

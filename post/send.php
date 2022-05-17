@@ -1,5 +1,13 @@
 <?php
 
+/*
+    $_GET {
+        'post_id'
+        'content'
+    }
+*/
+
+
 require_once __DIR__ . '/../php/modules/initialize.php';
 
 

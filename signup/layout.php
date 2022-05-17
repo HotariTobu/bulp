@@ -1,4 +1,4 @@
-<!--
+<?php /*
     $e_mail:    string
     $e_mail_message:    string
     $password:  string
@@ -6,7 +6,8 @@
     $nickname:  string
     $nickname_message:  string
     $error_message:    string
--->
+*/ ?>
+
 
 <a href="../"><?= LINK_TOP ?></a>
 <a href="../login"><?= ACTION_LOGIN ?></a>

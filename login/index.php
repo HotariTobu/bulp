@@ -1,5 +1,14 @@
 <?php
 
+/*
+    $_POST {
+        'submit'
+        'e_mail'
+        'password'
+    }
+*/
+
+
 require_once __DIR__ . '/../php/modules/initialize.php';
 
 
@@ -67,7 +76,7 @@ if ($submit === SUBMIT_VALUE_LOGIN) {
                 $_SESSION['nickname'] = $result['nickname'];
                 $_SESSION['note'] = $result['note'];
                 
-                header("Location:{$_SERVER['HTTP_REFERER']}");
+                header('Location:' . PATH_ROOT);
                 exit;
             }
         }

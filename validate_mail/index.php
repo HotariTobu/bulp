@@ -1,5 +1,12 @@
 <?php
 
+/*
+    $_GET {
+        'uid'
+    }
+*/
+
+
 require_once __DIR__ . '/../php/modules/initialize.php';
 
 
@@ -13,12 +20,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
 
 if (empty($uid)) {
+    $error_message = ERROR_MESSAGE_GET_VALIDATION_MAIL_DATA_ID;
+}
+else {
     # Get user id
 
     $table_name = TABLE_NAME_VALIDATION_MAIL;
     $query = "SELECT * FROM `{$table_name}` WHERE uid=:uid";
     $statement = $pdo->prepare($query);
-    $statement->bindParam(':uid', $uid, PDO::PARAM_INT);
+    $statement->bindParam(':uid', $uid, PDO::PARAM_STR);
 
     if (!$statement->execute()) {
         $error_message = ERROR_MESSAGE_GET_VALIDATION_MAIL_DATA;
@@ -43,10 +53,40 @@ if (empty($uid)) {
                 $error_message = ERROR_MESSAGE_VALIDATE_MAIL;
             }
             else {
-                # Update session value
+                # Get e-mail
     
-                if (isset($_SESSION['e_mail']) && $e_mail === $_SESSION['e_mail']) {
-                    $_SESSION['e_mail_validation'] = true;
+                $table_name = TABLE_NAME_USERS;
+                $query = "SELECT e_mail from `{$table_name}` WHERE id=:id";
+                $statement = $pdo->prepare($query);
+                $statement->bindParam(':id', $user_id, PDO::PARAM_INT);
+
+                if (!$statement->execute()) {
+                    $error_message = ERROR_MESSAGE_GET_USER_INFO;
+                }
+                else {
+                    $user = $statement->fetch();
+                    if (!$user) {
+                        $error_message = ERROR_MESSAGE_NO_USER_INFO;
+                    }
+                    else {
+                        # Update session value
+
+                        $e_mail = $user['e_mail'];
+                
+                        if (isset($_SESSION['e_mail']) && $e_mail === $_SESSION['e_mail']) {
+                            $_SESSION['e_mail_validation'] = true;
+                        }
+
+                        
+                        # Delete rows
+
+                        $table_name = TABLE_NAME_VALIDATION_MAIL;
+                        $query = "DELETE FROM `{$table_name}` WHERE user_id=:user_id";
+                        $statement = $pdo->prepare($query);
+                        $statement->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+
+                        $statement->execute();
+                    }
                 }
             }
         }

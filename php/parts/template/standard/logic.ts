@@ -1,38 +1,40 @@
 const PATH_HTTP_ROOT = `${window.location.protocol}//${window.location.hostname}/bulp/`;
 
-$('#a_resend_validation_mail').on('click', e => {
+$('#a-resend-validation-mail').on('click', e => {
     const url = PATH_HTTP_ROOT + 'validate_mail/resend.php';
-    $.get(url);
+    $.get(url).done(d => {
+        alert(d);
+    });
 });
 
-const divPopupPost = $('#div-popup-post');
-const div_popup_post_parent_post = $('#div_popup_post_parent_post');
-const input_post_id = $('#input_post_id');
-const a_post = $('.a_post')
-a_post.on('click', e => {
+const divPopupPostParentPost = $('#div-popup-post-parent-post');
+const inputPostId = $('#input-post-id');
+const aPost = $('.a-post')
+const formPost = $('#form-post');
+
+aPost.on('click', e => {
     const id = e.target.id;
     
     const url = PATH_HTTP_ROOT + 'post';
     const query = { id: id };
     $.get(url, query).done(d => {
-        div_popup_post_parent_post.html(d);
+        divPopupPostParentPost.html(d);
 
-        const height = div_popup_post_parent_post.height();
+        const height = divPopupPostParentPost.height();
         if (height !== undefined) {
-            divPopupPost.css('height', `${height + 200}px`);
+            formPost.css('height', `${300 - height}px`);
         }
     });
 
-    input_post_id.val(id);
+    inputPostId.val(id);
 });
-(a_post as any).magnificPopup({
+(aPost as any).magnificPopup({
     type: "inline"
 });
 
-const form_post = $('#form_post');
-$('#button_post').on('click', e => {
+$('#button-post').on('click', e => {
     const url = PATH_HTTP_ROOT + 'post/send.php';
-    const query = form_post.serialize();
+    const query = formPost.serialize();
     $.post(url, query).done(d => {
         if (d) {
             alert(d);
@@ -41,4 +43,9 @@ $('#button_post').on('click', e => {
             location.reload();
         }
     });
+});
+
+$('#button-cancel-post').on('click', e => {
+    e.preventDefault();
+    ($ as any).magnificPopup.close();
 });

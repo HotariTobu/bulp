@@ -1,11 +1,13 @@
-<!--
-    $user:  {
-        'image'
-        'image_number'
-    }
--->
-
 <?php
+
+    /*
+        $user:  {
+            'image'
+            'image_number'
+        }
+    */
+    
+
     require_once PATH_ROOT . 'php/modules/paths.php';
 
 

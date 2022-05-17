@@ -1,4 +1,6 @@
-<!--
+<?php
+
+/*
     $e_mail:    string
     $e_mail_message:    string
     $password:  string
@@ -6,9 +8,8 @@
     $nickname:  string
     $nickname_message:  string
     $error_message:    string
--->
+*/
 
-<?php
 
 if (isset($e_mail)) {
     if (strlen($e_mail) > 64) {

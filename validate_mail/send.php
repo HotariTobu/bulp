@@ -1,14 +1,15 @@
-<!--
+<?php
+
+/*
     $mail_title:    string
     $mail_lines:    array of string
--->
+*/
 
-<?php
 
 require_once __DIR__ . '/../php/modules/initialize.php';
 
 
-if (empty($id) || empty($e_mail)) {
+if (empty($_SESSION['id']) || empty($_SESSION['e_mail'])) {
     exit(ERROR_MESSAGE_GET_USER_INFO);
 }
 else {
@@ -17,7 +18,7 @@ else {
     $table_name = TABLE_NAME_VALIDATION_MAIL;
     $query = "DELETE FROM `{$table_name}` WHERE user_id=:user_id";
     $statement = $pdo->prepare($query);
-    $statement->bindParam(':user_id', $id, PDO::PARAM_INT);
+    $statement->bindParam(':user_id', $_SESSION['id'], PDO::PARAM_INT);
     
     $statement->execute();
     
@@ -30,7 +31,7 @@ else {
     $query = "INSERT INTO `{$table_name}` (uid, user_id) VALUES (:uid, :user_id)";
     $statement = $pdo->prepare($query);
     $statement->bindParam(':uid', $uid, PDO::PARAM_STR);
-    $statement->bindParam(':user_id', $id, PDO::PARAM_INT);
+    $statement->bindParam(':user_id', $_SESSION['id'], PDO::PARAM_INT);
     
     if (!$statement->execute()) {
         exit(ERROR_MESSAGE_REGISTER_VALIDATION_MAIL_DATA);
@@ -53,6 +54,14 @@ else {
             
         require_once PATH_ROOT . 'ignore_phpmailer/mailer.php';
         
-        echo send_mail(array($e_mail), $mail_title, $mail_message);
+        $result_message = send_mail(array($_SESSION['e_mail']), $mail_title, $mail_message);
+        if ($result_message === true) {
+            echo MESSAGE_SENT_VALIDATION_MAIL;
+        }
+        else {
+            echo ERROR_MESSAGE_SEND_VALIDATION_MAIL;
+            echo '<br>';
+            echo $result_message;
+        }
     }
 }

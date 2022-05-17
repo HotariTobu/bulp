@@ -49,13 +49,12 @@ a.non-text {
 #div-popup-post {
     background: wheat;
     width: 800px;
-    height: 200px;
     margin: 0px auto;
-    padding: 60px 90px;
+    padding: 30px;
 }
 
-#div-popup-post>div {
-    margin: auto;
+#form-post {
+    height: 300px;
 }
 
 textarea {

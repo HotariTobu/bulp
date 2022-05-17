@@ -1,5 +1,12 @@
 <?php
 
+/*
+    $_GET {
+        'id'
+    }
+*/
+
+
 require_once __DIR__ . '/../php/modules/initialize.php';
 
 

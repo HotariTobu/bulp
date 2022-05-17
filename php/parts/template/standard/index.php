@@ -1,11 +1,12 @@
-<!--
+<?php
+
+/*
     $title: string
     $description:   string
     $styles:    array of string
     $layout_path:    string
--->
+*/
 
-<?php
 
 if (!isset($styles)) {
     $styles = [];

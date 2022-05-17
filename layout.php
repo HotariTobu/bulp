@@ -1,8 +1,9 @@
-<!--
-    $posts: array of post
--->
-
 <?php
+
+/*
+    $posts: array of post
+*/
+
 
 if (isset($posts)) {
     foreach ($posts as $post) {

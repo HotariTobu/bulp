@@ -1,10 +1,10 @@
-<!--
+<?php /*
     $e_mail:    string
     $e_mail_message:    string
     $password:  string
     $password_message:  string
     $error_message:    string
--->
+*/ ?>
 
 <a href="../"><?= LINK_TOP ?></a>
 <a href="../signup"><?= ACTION_SIGNUP ?></a>

@@ -1,4 +1,4 @@
-<!--
+<?php /*
     $post:  {
         'id'
         'user_id'
@@ -8,7 +8,8 @@
         'id'
     }
     $has_action_bar:   boolean
--->
+*/ ?>
+
 
 <div class="post">
     <div class="main">
@@ -21,14 +22,14 @@
                 </a>
             <?php endif ?>
         </div>
-        <a href="<?= PATH_HTTP_ROOT . "post/detail?post_id={$post['id']}" ?>" class="content">
+        <a href="<?= PATH_HTTP_ROOT . "post/detail?id={$post['id']}" ?>" class="content">
             <?= $post['content'] ?>
         </a>
     </div>
     <?php if ($has_action_bar): ?>
         <div>
             <button><?= ACTION_POWER_WORD ?></button>
-            <a class="a_post" href="#div-popup-post" id="<?= $post['id'] ?>"><?= ACTION_REPLY ?></a>
+            <a class="a-post" href="#div-popup-post" id="<?= $post['id'] ?>"><?= ACTION_REPLY ?></a>
         </div>
     <?php endif ?>
 </div>

@@ -1,5 +1,12 @@
 <?php
 
+/*
+    $_GET {
+        'id'
+    }
+*/
+
+
 require_once __DIR__ . '/../php/modules/initialize.php';
 
 
@@ -48,12 +55,8 @@ if (isset($post)) {
     $statement = $pdo->prepare($query);
     $statement->bindParam(':id', $post['user_id'], PDO::PARAM_INT);
     
-    if (!$statement->execute()) {
-        exit(ERROR_MESSAGE_GET_USER_INFO);
-    }
-    else {
-        $user = $statement->fetch();
-    }
+    $statement->execute();
+    $user = $statement->fetch();
 }
 
 require __DIR__ . '/layout.php';

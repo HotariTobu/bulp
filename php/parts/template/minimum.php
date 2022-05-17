@@ -1,14 +1,16 @@
-<!--
-    paths.php
-    locale.php
-
-    $title: string
-    $description:   string
-    $styles:    array of string
-    $layout_path:    string
--->
-
 <?php
+
+    /*
+        paths.php
+        locale.php
+
+        $title: string
+        $description:   string
+        $styles:    array of string
+        $layout_path:    string
+    */
+
+
     if (!isset($styles)) {
         $styles = [];
     }

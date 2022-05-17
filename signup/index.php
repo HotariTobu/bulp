@@ -1,5 +1,15 @@
 <?php
 
+/*
+    $_POST {
+        'submit'
+        'e_mail'
+        'password'
+        'nickname'
+    }
+*/
+
+
 require_once __DIR__ . '/../php/modules/initialize.php';
 
 
@@ -44,7 +54,7 @@ if ($submit === SUBMIT_VALUE_SIGNUP) {
         }
         else {
             $users = $statement->fetchAll(); 
-            if (!$users) {
+            if ($users) {
                 $error_message = ERROR_MESSAGE_USED_EMAIL . ': ' . $e_mail;
             }
     
@@ -84,7 +94,7 @@ if ($submit === SUBMIT_VALUE_SIGNUP) {
     
                     require PATH_ROOT . 'validate_mail/send.php';
     
-                    header("Location:{$_SERVER['HTTP_REFERER']}");                
+                    header('Location:' . PATH_ROOT);
                     exit;
                 }
             }
