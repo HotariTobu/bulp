@@ -9,7 +9,7 @@
 
 
 <header>
-    <a href="<?= PATH_HTTP_ROOT ?>"><?= LINK_TOP ?></a>
+    <a id="a-link-to-top" href="<?= PATH_HTTP_ROOT ?>"><?= LINK_TOP ?></a>
     <a class="post-send" href="#div-popup-post"><?= ACTION_POST ?></a>
     <?php if (id >= 0): ?>
         <?= isset($_SESSION['nickname']) ? $_SESSION['nickname'] : '' ?><?= MESSAGE_WELCOME ?>

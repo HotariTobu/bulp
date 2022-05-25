@@ -1,4 +1,4 @@
-const PATH_HTTP_ROOT = `${window.location.protocol}//${window.location.hostname}/bulp/`;
+const PATH_HTTP_ROOT = $('#a-link-to-top').attr('href');
 
 $('#a-resend-validation-mail').on('click', e => {
     const url = PATH_HTTP_ROOT + 'validate_mail/resend.php';

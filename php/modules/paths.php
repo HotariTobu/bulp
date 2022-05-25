@@ -6,4 +6,4 @@ const PATH_DATABASE_INFO = PATH_ROOT . 'ignore_database_info';
 const PATH_ICONS = PATH_ROOT . 'rec/icons/';
 
 
-define('PATH_HTTP_ROOT', "{$_SERVER['REQUEST_SCHEME']}://{$_SERVER['HTTP_HOST']}/bulp/");
+define('PATH_HTTP_ROOT', file(PATH_ROOT . 'ignore_root_path', FILE_IGNORE_NEW_LINES)[0]);
