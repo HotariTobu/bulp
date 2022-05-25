@@ -12,17 +12,18 @@ require_once __DIR__ . '/../php/modules/initialize.php';
 
 # Get GET values
 
-$is_same = isset($id);
+$user_id = id;
+$is_same = id >= 0;
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     if (!empty($_GET['id'])) {
-        $is_same = $is_same && $id == $_GET['id'];
-        $id = $_GET['id'];
+        $user_id = $_GET['id'];
+        $is_same &= id == $user_id;
     }
 }
 
 
-if (empty($id)) {
-    $error_message = ERROR_MESSAGE_GET_ID;
+if ($user_id < 0) {
+    $error_message = ERROR_MESSAGE_INVALID_OPERATION;
 }
 else {
     # Get user info
@@ -30,7 +31,7 @@ else {
     $table_name = TABLE_NAME_USERS;
     $query = "SELECT * FROM `{$table_name}` WHERE id=:id";
     $statement = $pdo->prepare($query);
-    $statement->bindParam(':id', $id, PDO::PARAM_INT);
+    $statement->bindParam(':id', $user_id, PDO::PARAM_INT);
     
     if (!$statement->execute()) {
         $error_message = ERROR_MESSAGE_GET_USER_INFO;
@@ -53,7 +54,7 @@ else {
             }
             else {
                 $posts = $statement->fetchAll();
-            }            
+            }
         }
     }
 }

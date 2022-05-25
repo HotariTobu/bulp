@@ -24,15 +24,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 }
 
 
-if (empty($content)) {
-    exit(ERROR_MESSAGE_EMPTY_POST_CONTENT);
+require_once PATH_ROOT . 'php/modules/validate/post_content.php';
+
+if (!empty($error_message)) {
+    exit($error_message);
 }
 else {
     # Insert post
-    
-    if (empty($id)) {
-        $id = -1;
-    }
     
     if (empty($post_id)) {
         $post_id = -1;
@@ -41,7 +39,7 @@ else {
     $table_name = TABLE_NAME_POSTS;
     $query = "INSERT INTO `{$table_name}` (user_id, reply_id, content) VALUES (:user_id, :reply_id, :content)";
     $statement = $pdo->prepare($query);
-    $statement->bindParam(':user_id', $id, PDO::PARAM_INT);
+    $statement->bindValue(':user_id', id, PDO::PARAM_INT);
     $statement->bindParam(':reply_id', $post_id, PDO::PARAM_INT);
     $statement->bindParam(':content', $content, PDO::PARAM_STR);
     

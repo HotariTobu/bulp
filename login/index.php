@@ -33,52 +33,30 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 if ($submit === SUBMIT_VALUE_LOGIN) {
     # Validate values
 
-    if (empty($e_mail)) {
-        $e_mail_message = ERROR_MESSAGE_EMPTY_EMAIL;
-        $error_message = ERROR_MESSAGE_CONFIRM_INPUT;
-    }
+    require PATH_ROOT . 'php/modules/validate/e_mail.php';
+    require PATH_ROOT . 'php/modules/validate/password.php';
     
-    if (empty($password)) {
-        $password_message = ERROR_MESSAGE_EMPTY_PASSWORD;
-        $error_message = ERROR_MESSAGE_CONFIRM_INPUT;
-    }
-
-
-    if (isset($e_mail) && isset($password)) {
+    
+    if (empty($error_message)) {
         # Confirm record
         
-        $hashed_password = hash('sha256', $password, true);
+        require PATH_ROOT . 'php/modules/confirm_user.php';
 
-        $table_name = TABLE_NAME_USERS;
-        $query = "SELECT * FROM `{$table_name}` WHERE e_mail=:e_mail AND password=:password";
-        $statement = $pdo->prepare($query);
-        $statement->bindParam(':e_mail', $e_mail, PDO::PARAM_STR);
-        $statement->bindParam(':password', $hashed_password, PDO::PARAM_LOB);
-        
-        if (!$statement->execute()) {
-            $error_message = ERROR_MESSAGE_GET_USER_INFO;
-        }
-        else {
-            $result = $statement->fetch(); 
-            if (!$result) {
-                $error_message = ERROR_MESSAGE_WRONG_EMAIL_OR_PASSWORD;
-            }
-            else {
-                # Set session values
-    
-                session_start();
-                $_SESSION = array();
-                $_SESSION['id'] = $result['id'];
-                $_SESSION['e_mail'] = $result['e_mail'];
-                $_SESSION['e_mail_validation'] = $result['e_mail_validation'];
-                $_SESSION['image'] = $result['image'];
-                $_SESSION['image_number'] = $result['image_number'];
-                $_SESSION['nickname'] = $result['nickname'];
-                $_SESSION['note'] = $result['note'];
-                
-                header('Location:' . PATH_ROOT);
-                exit;
-            }
+
+        if (empty($error_message)) {
+            # Set session values
+
+            $_SESSION = array();
+            $_SESSION['id'] = $user['id'];
+            $_SESSION['e_mail'] = $user['e_mail'];
+            $_SESSION['e_mail_validation'] = $user['e_mail_validation'];
+            $_SESSION['image'] = $user['image'];
+            $_SESSION['image_number'] = $user['image_number'];
+            $_SESSION['nickname'] = $user['nickname'];
+            $_SESSION['note'] = $user['note'];
+            
+            header('Location:' . PATH_HTTP_ROOT);
+            exit;
         }
     }
 }

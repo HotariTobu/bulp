@@ -5,6 +5,7 @@
         'submit'
         'e_mail'
         'password'
+        'retype_password'
         'nickname'
     }
 */
@@ -28,6 +29,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (!empty($_POST['password'])) {
         $password = $_POST['password'];
     }
+
+    if (!empty($_POST['retype_password'])) {
+        $retype_password = $_POST['retype_password'];
+    }
     
     if (!empty($_POST['nickname'])) {
         $nickname = $_POST['nickname'];
@@ -38,7 +43,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 if ($submit === SUBMIT_VALUE_SIGNUP) {
     # Validate values
 
-    require_once PATH_ROOT . 'php/modules/validate_user_info.php';
+    require_once PATH_ROOT . 'php/modules/validate/e_mail.php';
+    require_once PATH_ROOT . 'php/modules/validate/retype_password.php';
+    require_once PATH_ROOT . 'php/modules/validate/nickname.php';
     
     
     if (isset($e_mail)) {
@@ -57,12 +64,12 @@ if ($submit === SUBMIT_VALUE_SIGNUP) {
             if ($users) {
                 $error_message = ERROR_MESSAGE_USED_EMAIL . ': ' . $e_mail;
             }
-    
-            
+
             if (empty($error_message)) {
                 # Insert record
     
-                $hashed_password = hash('sha256', $password, true);
+                require PATH_ROOT . 'php/modules/hash_password.php';
+
                 $image_number = rand(0, 32767);
             
                 $table_name = TABLE_NAME_USERS;
@@ -80,11 +87,8 @@ if ($submit === SUBMIT_VALUE_SIGNUP) {
                 else {
                     # Set session values
                     
-                    $id = $pdo->lastInsertId();
-                
-                    session_start();
                     $_SESSION = array();
-                    $_SESSION['id'] = $id;
+                    $_SESSION['id'] = $pdo->lastInsertId();
                     $_SESSION['e_mail'] = $e_mail;
                     $_SESSION['e_mail_validation'] = false;
                     $_SESSION['image'] = null;
@@ -94,7 +98,7 @@ if ($submit === SUBMIT_VALUE_SIGNUP) {
     
                     require PATH_ROOT . 'validate_mail/send.php';
     
-                    header('Location:' . PATH_ROOT);
+                    header('Location:' . PATH_HTTP_ROOT);
                     exit;
                 }
             }

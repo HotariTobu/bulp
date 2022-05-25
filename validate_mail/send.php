@@ -56,12 +56,10 @@ else {
         
         $result_message = send_mail(array($_SESSION['e_mail']), $mail_title, $mail_message);
         if ($result_message === true) {
-            echo MESSAGE_SENT_VALIDATION_MAIL;
+            push_message(MESSAGE_SENT_VALIDATION_MAIL);
         }
         else {
-            echo ERROR_MESSAGE_SEND_VALIDATION_MAIL;
-            echo '<br>';
-            echo $result_message;
+            echo ERROR_MESSAGE_SEND_VALIDATION_MAIL . $result_message;
         }
     }
 }

@@ -39,5 +39,8 @@
     $image_info = getimagesizefromstring($user['image']);
     $encoded_image = base64_encode($user['image']);
 ?>
+<!--
 
-<img src="<?= "data:{$image_info['mime']};base64,{$encoded_image}" ?>" class="icon">
+    <img src="<?= "data:{$image_info['mime']};base64,{$encoded_image}" ?>" class="icon">
+-->
+<div style="background-image: url(<?= "data:{$image_info['mime']};base64,{$encoded_image}" ?>);" class="icon"></div>

@@ -17,21 +17,21 @@ if (empty($post)) {
 
     if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         if (!empty($_GET['id'])) {
-            $id = $_GET['id'];
+            $post_id = $_GET['id'];
         }
     }
 
-    if (empty($id)) {
+    if (empty($post_id)) {
         exit(ERROR_MESSAGE_GET_ID);
     }
-    else if ($id < 0) {
+    else if ($post_id < 0) {
         exit;
     }
     else {
         $table_name = TABLE_NAME_POSTS;
         $query = "SELECT * FROM `{$table_name}` WHERE id=:id";
         $statement = $pdo->prepare($query);
-        $statement->bindParam(':id', $id, PDO::PARAM_INT);
+        $statement->bindParam(':id', $post_id, PDO::PARAM_INT);
         
         if (!$statement->execute()) {
             exit(ERROR_MESSAGE_GET_POSTS);
