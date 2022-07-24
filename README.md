@@ -30,7 +30,7 @@ Place in the WEB server.
 
 ## Licence
 
-[LICENCE](./LICENCE)
+[Unlicense](LICENSE)
 
 ## Author
 
